@@ -117,7 +117,7 @@ uint8_t SendReceiveSPIByte(uint32_t value)
 	// Read a byte
 	uint8_t inbyte = *(uint32_t *)(SPI1_BASE + 0x0c);
 	
-	// Loop while the SPI BSY flag is high
+	// Loop waiting for the the SPI TXE flag to go high
 	while (lout == 0)
 	{
 		// Read the SPI status register
