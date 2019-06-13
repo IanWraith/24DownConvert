@@ -17,12 +17,12 @@ void SendSPIDataADF4350 (uint8_t,uint32_t);
 int main(void)
 {
 
-	// Below are the ADF4350 settings for a 1 GHz -4dBm output
+	// Below are the ADF4350 settings for a 1 GHz +5dBm output
 	uint32_t ar0=0x00500000;
 	uint32_t ar1=0x08008011;
-	uint32_t ar2=0x00004E42;
+	uint32_t ar2=0x00004e42;
 	uint32_t ar3=0x000004b3;
-	uint32_t ar4=0x00ac8024;
+	uint32_t ar4=0x00ac803c;
 	uint32_t ar5=0x00580005;
 		
 	// Turn on the port A + SPI1 clocks
