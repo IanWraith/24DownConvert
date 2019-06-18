@@ -12,7 +12,7 @@
 
 void Delay(uint32_t);
 uint16_t SendReceiveSPIData(uint16_t);
-void SendSPIDataADF4350 (uint8_t,uint32_t);
+void SendSPIDataADF4350 (uint32_t);
 
 int main(void)
 {
@@ -24,7 +24,15 @@ int main(void)
 	uint32_t ar3=0x000004b3;
 	uint32_t ar4=0x00ac803c;
 	uint32_t ar5=0x00580005;
-		
+	
+	// Below are the ADF4350 settings for a 145.5 MHz +5dBm output
+	//uint32_t ar0=0x2e8018;
+	//uint32_t ar1=0x80080c9;
+	//uint32_t ar2=0x4e42;
+	//uint32_t ar3=0x4b3;
+	//uint32_t ar4=0xcc803c;
+	//uint32_t ar5=0x580005;
+
 	// Turn on the port A + SPI1 clocks
 	*(uint32_t *)(RCC_BASE + 0x18) &= MASK_2 | MASK_12;
 	*(uint32_t *)(RCC_BASE + 0x18) |= BIT_2 | BIT_12;
@@ -80,12 +88,12 @@ int main(void)
 	Delay(100000);
 		
 	// Send the setup data to the ADF4350
-	SendSPIDataADF4350(5,ar5);
-	SendSPIDataADF4350(4,ar4);
-	SendSPIDataADF4350(3,ar3);
-	SendSPIDataADF4350(2,ar2);
-	SendSPIDataADF4350(1,ar1);
-	SendSPIDataADF4350(0,ar0);
+	SendSPIDataADF4350(ar5);
+	SendSPIDataADF4350(ar4);
+	SendSPIDataADF4350(ar3);
+	SendSPIDataADF4350(ar2);
+	SendSPIDataADF4350(ar1);
+	SendSPIDataADF4350(ar0);
 	
 	// Go into an endless loop waiting for frequency lock to be achieved
 	while(1)
@@ -131,14 +139,12 @@ uint16_t SendReceiveSPIData(uint16_t value)
 	return inbyte;
 }
 
-// Send a 29 bit register value plus 3 control bits to the ADF4350
-void SendSPIDataADF4350 (uint8_t regNo,uint32_t outval)
+// Send a 32 bit register value to the ADF4350
+void SendSPIDataADF4350 (uint32_t outval)
 {
-	// Shift the data being sent 3 bits to the left and add the register number
-	uint32_t sendword = (outval << 3) + regNo;
 	// This then needs splitting into 2 x 16 bit words
-    uint16_t highWord = (sendword & 0xffff0000) >> 16;
-	uint16_t lowWord = sendword & 0x0000ffff;
+    uint16_t highWord = (outval & 0xffff0000) >> 16;
+	uint16_t lowWord = outval & 0x0000ffff;
 	// Send these to the ADF4350 via SPI
 	SendReceiveSPIData (highWord);
 	SendReceiveSPIData (lowWord);
@@ -153,10 +159,12 @@ void SendSPIDataADF4350 (uint8_t regNo,uint32_t outval)
 		// The condition has been met so signal to get out of this loop
 		if (statusSPI == 0) lout = 1;
 	}
+	// Add a delay here so the clock has gone low before LE is taken high
+	Delay(10);
 	// Take LE high to load the data into the register
 	*(uint32_t *)(GPIOA_BASE + 0x10) = BIT_2;
 	// Short delay while LE is high (minimum of 20ns)
-	Delay(50);
+	Delay(30);
 	// Take LE low again
 	*(uint32_t *)(GPIOA_BASE + 0x14) = BIT_2;
 }
