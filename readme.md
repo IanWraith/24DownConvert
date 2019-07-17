@@ -62,7 +62,7 @@ Note the mixer boards RFOUT output goes directly to the Airspy's antenna input. 
 So does it work ? I am pleased to say that it does. I can 'see' Wi-Fi signals (which are to wide bandwidth for my Airspy to handle) but I can now also monitor Zigbee and Bluetooth signals. I have also found
 some interesting 2.4 GHz ISM band oddities using OOK and 2FSK modulation which I have yet to identify. Oh and I can detect 3G or 4G phone signals around 2.6 GHz.
 
-##Future Improvements
+### Future Improvements
 
 * A band pass filter on the antenna input to the mixer to remove strong out of band transmissions.
 
