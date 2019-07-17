@@ -18,19 +18,19 @@ int main(void)
 {
 
 	// Below are the ADF4350 settings for a 1 GHz +5dBm output
-	uint32_t ar0=0x00500000;
-	uint32_t ar1=0x08008011;
-	uint32_t ar2=0x00004e42;
-	uint32_t ar3=0x000004b3;
-	uint32_t ar4=0x00ac803c;
-	uint32_t ar5=0x00580005;
+	uint32_t ar0=0x500000;
+	uint32_t ar1=0x8008011;
+	uint32_t ar2=0x4e42;
+	uint32_t ar3=0x4b3;
+	uint32_t ar4=0xac803c;
+	uint32_t ar5=0x580005;
 	
-	// Below are the ADF4350 settings for a 145.5 MHz +5dBm output
-	//uint32_t ar0=0x2e8018;
-	//uint32_t ar1=0x80080c9;
+	// Below are the ADF4350 settings for a 1001.25 MHz +5dBm output
+	//uint32_t ar0=0x500008;
+	//uint32_t ar1=0x8008029;
 	//uint32_t ar2=0x4e42;
 	//uint32_t ar3=0x4b3;
-	//uint32_t ar4=0xcc803c;
+	//uint32_t ar4=0xac803c;
 	//uint32_t ar5=0x580005;
 
 	// Turn on the port A + SPI1 clocks

@@ -1,0 +1,10 @@
+*.elf
+*.bin
+*.hex
+*.size
+*.lst
+*.dis
+*.map
+*.o
+*.su
+ignore_*
